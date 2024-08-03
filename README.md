@@ -69,24 +69,119 @@ The API includes endpoints for viewing available classes, booking a class, and c
     ```sh
     docker compose exec app php artisan migrate
     ```
+## Troubleshooting
+1. fix common permisions error
+    ```sh
+    chmod -R 755 clearit-booking/storage/logs
+    chmod -R 777 clearit-booking/storage/framework/cache
+    ```
+    
 ## API Endpoints
 
-### List Available Classes
+### GET CLASSROMS
 
-- **URL:** `/api/classes`
+- **URL:** `http://localhost:8080/api/classes`
 - **Method:** `GET`
 - **Response:**
   ```json
   [
-      {
-          "id": 1,
-          "name": "Math Classroom",
-          "start_time": "09:00:00",
-          "end_time": "19:00:00",
-          "duration": 2,
-          "capacity": 10,
-          "days": ["Monday", "Tuesday", "Wednesday"],
-          "current_availability": 10
-      },
+    "success": true,
+    "data": [
+        {
+            "id": 1,
+            "name": "Math Classroom",
+            "days": "[\"Monday\",\"Tuesday\",\"Wednesday\"]",
+            "start_time": "09:00:00",
+            "end_time": "19:00:00",
+            "capacity": 10,
+            "duration": 2,
+            "created_at": "2024-08-03 22:08:51",
+            "updated_at": "2024-08-03 22:08:51"
+        },
       ...
   ]
+  ```
+### POST BOOK
+
+- **URL:** `http://localhost:8080/api/book`
+- **Method:** `POST`
+- **Parameters:** 
+    ```json
+    {
+        "classroom_id": 1,
+        "user": "user@example.com",
+        "start_time": "2024-08-10 09:00:00"
+    }
+    ```
+- **Response:**
+  ```json
+  [
+    {
+        "success": true,
+        "data": {
+            "bookingId": {
+                "id": 1
+            }
+        },
+        "message": "Booking created successfully",
+        "code": 201
+    }
+  ]
+
+### GET USER'S BOOKINGS
+
+- **URL:** `http://localhost:8080/api/classes/user`
+- **Method:** `GET`
+- **Parameters:** 
+    ```json
+    {
+        "user": "user@example.com",
+    }
+    ```
+- **Response:**
+  ```json
+  [
+    {
+        "success": true,
+        "data": [
+            {
+                "id": 1,
+                "classroom_id": 1,
+                "user": "morimartin@gmail.com",
+                "start_time": "2024-08-14 11:00:00",
+                "end_time": "2024-08-14 13:00:00",
+                "created_at": "2024-08-03 22:24:33",
+                "updated_at": "2024-08-03 22:24:33"
+            }
+        ],
+        "message": "",
+        "code": 200
+    }
+  ]
+
+### DELETE BOOKING
+
+- **URL:** `http://localhost:8080/api/cancel/{bookingId}`
+- **Method:** `DELETE`
+- **Parameters:** 
+    ```json
+    {
+        "user": "user@example.com",
+    }
+    ```
+- **Response:**
+  ```json
+  [
+    {
+        "success": true,
+        "data": [],
+        "message": "Booking canceled successfully",
+        "code": 200
+    }
+  ]  
+
+
+## Running Tests
+```sh
+    docker compose exec app php artisan test
+```
