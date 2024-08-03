@@ -1,0 +1,49 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel-app
+    container_name: laravel-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./clearit-booking:/var/www
+    networks:
+      - app-network
+
+  webserver:
+    image: nginx:alpine
+    container_name: nginx-webserver
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./clearit-booking:/var/www
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:5.7.22
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: booking_system
+      MYSQL_USER: user
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
