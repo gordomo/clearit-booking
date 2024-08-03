@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "902f3f3d-28e7-4edf-a95c-b58d49ceb56a",
+		"name": "CLEARIT API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "993061"
+	},
+	"item": [
+		{
+			"name": "GET CLASES",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/classes"
+			},
+			"response": []
+		},
+		{
+			"name": "POST BOOK",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/book?classroom_id=1&user=morimartin@gmail.com&start_time=2024-08-14 11:00:00",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"book"
+					],
+					"query": [
+						{
+							"key": "classroom_id",
+							"value": "1"
+						},
+						{
+							"key": "user",
+							"value": "morimartin@gmail.com"
+						},
+						{
+							"key": "start_time",
+							"value": "2024-08-14 11:00:00"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET USER BOOKINGS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/classes/user?user=morimartin@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"classes",
+						"user"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "morimartin@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE BOOKING",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/cancel/1?user=morimartin@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cancel",
+						"1"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "morimartin@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
