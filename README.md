@@ -9,12 +9,12 @@ The API includes endpoints for viewing available classes, booking a class, and c
 - [Configuration](#configuration)
 - [Database Setup](#database-setup)
 - [API Endpoints](#api-endpoints)
-  - [List Available Classes](#list-available-classes)
-  - [Book a Class](#book-a-class)
-  - [Cancel a Booking](#cancel-a-booking)
+  - [GET CLASSROMS](#get-classroms)
+  - [POST BOOK](#post-book)
+  - [GET USER'S BOOKINGS](#get-users-bookings)
+  - [DELETE BOOKING](#delete-booking)
 - [Running Tests](#running-tests)
-- [Contributing](#contributing)
-- [License](#license)
+- [Postman Collection](#postman-collection)
 
 ## Dependencies
 - **Docker:** [`https://docs.docker.com/engine/install/`](https://docs.docker.com/engine/install/)
@@ -185,3 +185,11 @@ The API includes endpoints for viewing available classes, booking a class, and c
 ```sh
     docker compose exec app php artisan test
 ```
+
+## Postman collection
+
+A postman collection has been added to this repository (api.postman_collection.json)<b>
+Import on postman in order to use the API.
+
+
+
