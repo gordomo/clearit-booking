@@ -72,17 +72,18 @@ class BookingService
         $overlap = DB::select('
             SELECT * FROM bookings 
             WHERE user = ?
-              AND (
-                (start_time BETWEEN ? AND ?)
-                OR (end_time BETWEEN ? AND ?)
-                OR (? BETWEEN start_time AND end_time)
-                OR (? BETWEEN start_time AND end_time)
-              )
-        ', [$user, $startTime, $endTime, $startTime, $endTime, $startTime, $endTime]);
+                AND (
+                    (start_time < ? AND end_time > ?)
+                    OR (start_time < ? AND end_time > ?)
+                    OR (? < start_time AND ? > start_time)
+                    OR (? < end_time AND ? > end_time)
+                )
+            ', [$user, $endTime, $startTime, $endTime, $startTime, $startTime, $endTime, $startTime, $endTime]);
 
         if (!empty($overlap)) {
-            throw new \Exception('This time slot conflicts with another booking');
+        throw new \Exception('This time slot conflicts with another booking');
         }
+
 
         // Crear la reserva
         DB::insert('
