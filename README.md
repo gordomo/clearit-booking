@@ -76,6 +76,11 @@ The API includes endpoints for viewing available classes, booking a class, and c
     chmod -R 777 clearit-booking/storage/framework/cache
     ```
     
+## Running Tests
+```sh
+    docker compose exec app php artisan test
+```
+
 ## API Endpoints
 
 ### GET CLASSROMS
@@ -180,10 +185,72 @@ The API includes endpoints for viewing available classes, booking a class, and c
     }
   ]  
 
+## Models
 
-## Running Tests
-```sh
-    docker compose exec app php artisan test
+### Classroom
+- `id`: Primary key
+- `name`: String
+- `start_time`: Time
+- `end_time`: Time
+- `duration`: Integer
+- `capacity`: Integer
+- `days`: JSON
+
+### Booking
+- `id`: Primary key
+- `classroom_id`: Foreign key referencing Classroom
+- `user`: String
+- `start_time`: Datetime
+- `end_time`: Datetime
+- `created_at`: Datetime
+- `updated_at`: Datetime
+
+## Relationships
+- A `Classroom` can have many `Bookings`.
+- A `Booking` belongs to a `Classroom`.
+
+
+## Database ER Diagram
+
+### Classroom
+| Field      | Type    | Description                   |
+|------------|---------|-------------------------------|
+| id (PK)    | int     | Primary key                   |
+| name       | string  | Name of the classroom         |
+| start_time | time    | Start time of the classroom   |
+| end_time   | time    | End time of the classroom     |
+| duration   | int     | Duration of each session      |
+| capacity   | int     | Capacity of the classroom     |
+| days       | json    | Days the classroom is active  |
+
+### Booking
+| Field          | Type     | Description                           |
+|----------------|----------|---------------------------------------|
+| id (PK)        | int      | Primary key                           |
+| classroom_id (FK) | int   | Foreign key referencing Classroom     |
+| user           | string   | User who booked the classroom         |
+| start_time     | datetime | Start time of the booking             |
+| end_time       | datetime | End time of the booking               |
+| created_at     | datetime | Timestamp when the booking was created|
+| updated_at     | datetime | Timestamp when the booking was updated|
+
+### Relationships
+- A `Classroom` can have many `Bookings`.
+- A `Booking` belongs to a `Classroom`.
+
+### Visual Representation
+```plaintext
++------------------+              +------------------+
+|    Classroom     |              |     Booking      |
++------------------+              +------------------+
+| id (PK)          |<-------------| classroom_id (FK)|
+| name             |              | id (PK)          |
+| start_time       |              | user             |
+| end_time         |              | start_time       |
+| duration         |              | end_time         |
+| capacity         |              +------------------+
+| days             |              
++------------------+              
 ```
 
 ## Postman collection
